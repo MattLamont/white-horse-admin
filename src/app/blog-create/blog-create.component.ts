@@ -1,6 +1,7 @@
-import { Component, OnInit , ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {AdminService} from '../admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap';
 
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 
@@ -11,7 +12,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 })
 export class BlogCreateComponent implements OnInit {
 
-@ViewChild(ModalDirective) public staticModal: ModalDirective;
+  @ViewChild(ModalDirective) public staticModal: ModalDirective;
 
   public title = '';
   public author = '';
@@ -30,6 +31,9 @@ export class BlogCreateComponent implements OnInit {
   public isInfoModal: boolean;
 
   public isPostButtonDisabled = false;
+
+  public alert_message: string;
+  public alert_type = 'danger';
 
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
@@ -58,7 +62,17 @@ export class BlogCreateComponent implements OnInit {
   }
 
   createPost() {
+    this.alert_message = '';
     this.isPostButtonDisabled = true;
+
+    if (this.title.length == 0 ||
+      this.author.length == 0 ||
+      this.content.length == 0 ||
+      this.image_url.length == 0) {
+      this.alert_message = 'All input fields are required!';
+      this.isPostButtonDisabled = false;
+      return;
+    }
 
     if (this.isEditing) {
       this.adminService
@@ -117,7 +131,7 @@ export class BlogCreateComponent implements OnInit {
       );
   }
 
-  onOkButtonClick(){
+  onOkButtonClick() {
     this.staticModal.hide();
     const newLink = ['/blogs'];
     this.router.navigate(newLink);
