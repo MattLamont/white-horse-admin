@@ -23,7 +23,7 @@ export class AdminService {
   public getBlogPosts() {
 
     return this.http
-      .get(ADMIN_API_URL + '/blogs')
+      .get(ADMIN_API_URL + '/blog/posts')
       .map(response => {
         return response.json();
       })
@@ -33,7 +33,7 @@ export class AdminService {
   public getBlogPost( id: any) {
 
     return this.http
-      .get(ADMIN_API_URL + '/blog/' + id)
+      .get(ADMIN_API_URL + '/blog/post' + id)
       .map(response => {
         return response.json();
       })
