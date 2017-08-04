@@ -51,6 +51,11 @@ export class ImagesViewComponent implements OnInit {
   }
 
   updateImage(){
+
+    if( this.currentImage.image_url == '' ){
+      return;
+    }
+    
     this.isPostButtonDisabled = true;
 
     this.adminService
